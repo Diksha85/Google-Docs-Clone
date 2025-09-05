@@ -1,0 +1,296 @@
+/* ===== Main Editor Page ===== */
+.editor-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: #f4f6f8;
+  font-family: "Roboto", sans-serif;
+}
+
+/* ===== Top Toolbar ===== */
+.editor-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fff;
+  padding: 10px ;
+  border-bottom: 1px solid #ddd;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  border-radius: 0 0 8px 8px;
+}
+
+/* ===== Quill Toolbar ===== */
+#custom-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+#custom-toolbar select,
+#custom-toolbar button {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  color: #333;
+  padding: 5px 8px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+#custom-toolbar button:hover,
+#custom-toolbar select:hover {
+  background-color: #f1f1f1;
+}
+
+#custom-toolbar button:focus,
+#custom-toolbar select:focus {
+  outline: none;
+  border-color: #4285F4;
+}
+
+/* ===== Share & Download Buttons ===== */
+.editor-actions {
+  display: flex;
+  gap: 8px;
+  position: relative;
+  margin-left: auto;
+}
+
+.editor-actions button {
+  padding: 8px 16px;
+  font-weight: 500;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.share-btn {
+  background-color: #4285F4;
+  color: white;
+  height: 40px;
+}
+
+.share-btn:hover {
+  background-color: #357ae8;
+}
+
+.download-btn {
+  background-color: #34A853;
+  color: white;
+  height: 40px;
+}
+
+.download-btn:hover {
+  background-color: #2c8c46;
+}
+
+/* ===== Copied Text Tooltip ===== */
+.copied-tooltip {
+  position: absolute;
+  top: -30px;
+  right: 0;
+  background-color: #4caf50;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  white-space: nowrap;
+  animation: fadeOut 2s forwards;
+}
+
+@keyframes fadeOut {
+  0% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* ===== Share Dropdown ===== */
+.share-dropdown {
+  /* position: absolute; */
+  top: 50px;
+  right: 0;
+  background: #fff;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  overflow: hidden;
+  z-index: 1000;
+}
+
+.share-dropdown div {
+  padding: 10px 0px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.share-dropdown div:hover {
+  background-color: #f1f1f1;
+}
+
+/* ===== Editor Layout ===== */
+.editor-main {
+  display: flex;
+  flex: 1;
+  padding: 20px;
+  gap: 20px;
+  overflow: hidden;
+  justify-content: center;
+}
+
+.editor-content-wrapper {
+  flex: 3;
+  display: flex;
+  justify-content: center;
+  overflow-y: auto;
+}
+
+.editor-container {
+  background: #fff;
+  width: 850px;
+  min-height: 1100px;
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+}
+
+.editor-container:hover {
+  box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+}
+
+/* ===== Comments Panel ===== */
+#comment-panel {
+  flex: 1;
+  max-width: 350px;
+  background: #fff;
+  padding: 16px;
+  border-left: 1px solid #e0e0e0;
+  display: flex;
+  flex-direction: column;
+  border-radius: 8px;
+}
+
+#comment-panel h3 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+/* Comments List */
+#comments-list {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+#comments-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+#comments-list::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 4px;
+}
+
+/* Single Comment Card */
+.comment {
+  background: #fdfdfd;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 12px;
+  margin-bottom: 12px;
+  font-size: 14px;
+  transition: background 0.2s;
+}
+
+.comment:hover {
+  background: #f9f9f9;
+}
+
+.comment b {
+  color: #1a73e8;
+}
+
+/* Buttons inside comments */
+.comment .comment-actions {
+  margin-top: 8px;
+  display: flex;
+  gap: 8px;
+}
+
+.comment .comment-actions button {
+  padding: 6px 10px;
+  font-size: 13px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.comment .comment-actions button:first-of-type {
+  background: #1a73e8;
+  color: white;
+}
+
+.comment .comment-actions button:last-of-type {
+  background: #34a853;
+  color: white;
+}
+
+/* Reply Box */
+.reply-box {
+  margin-top: 8px;
+}
+
+.reply-box textarea {
+  width: 100%;
+  min-height: 40px;
+  padding: 6px;
+  font-size: 13px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: none;
+  outline: none;
+}
+
+.reply-box .reply-actions {
+  margin-top: 6px;
+  display: flex;
+  gap: 8px;
+}
+
+.reply-box .reply-actions button {
+  padding: 5px 10px;
+  font-size: 13px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.reply-box .reply-actions button:first-of-type {
+  background: #1a73e8;
+  color: white;
+}
+
+.reply-box .reply-actions button:last-of-type {
+  background: #f1f3f4;
+  color: #333;
+}
+
+/* Replies Display */
+.replies {
+  margin-top: 8px;
+  padding-left: 10px;
+  border-left: 2px solid #e0e0e0;
+}
+
+.replies p {
+  font-size: 13px;
+  margin: 4px 0;
+  color: #555;
+}

@@ -2,14 +2,20 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import "../styles/DocsHome.css";
+
 import DocsNavbar from "../components/DocsNavbar";
 import NewDocumentCard from "../components/NewDocumentCard";
 import RecentDocuments from "../components/RecentDocuments";
 import ThemeToggle from "../components/ThemeToggle";
+import TitleModal from "../components/TitleModal";
 
 export default function DocsHome() {
   const navigate = useNavigate();
   const [recentDocs, setRecentDocs] = useState([]);
+
+  // ✅ State for modal
+  const [isTitleModalOpen, setIsTitleModalOpen] = useState(false);
+  const [docTitle, setDocTitle] = useState("");
 
   useEffect(() => {
     const token = Cookies.get("authToken");
@@ -28,9 +34,16 @@ export default function DocsHome() {
       .catch((err) => console.error("Failed to load documents:", err));
   }, [navigate]);
 
-  const handleNewDocument = async () => {
-    const title = prompt("Enter document title:");
-    if (!title) return;
+  // ✅ Open modal when clicking on Blank Document
+  const openTitleModal = () => {
+    console.log("modal opensssss");
+    setDocTitle("");
+    setIsTitleModalOpen(true);
+  };
+
+  // ✅ Handle Save from modal
+  const handleSaveTitle = async () => {
+    if (!docTitle.trim()) return;
 
     try {
       const token = Cookies.get("authToken");
@@ -40,11 +53,12 @@ export default function DocsHome() {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ title }),
+        body: JSON.stringify({ title: docTitle }),
       });
 
       const data = await res.json();
       if (res.ok) {
+        setIsTitleModalOpen(false);
         navigate(`/editor/${data.document._id}`);
       } else {
         alert(data.message || "Failed to create document");
@@ -62,7 +76,7 @@ export default function DocsHome() {
       <div className="docs-content">
         <div className="docs-section">
           <h2 className="docs-section-title">Start a new document</h2>
-          <NewDocumentCard handleNewDocument={handleNewDocument} />
+          <NewDocumentCard openTitleModal={openTitleModal} />
         </div>
 
         <div className="docs-section">
@@ -70,6 +84,16 @@ export default function DocsHome() {
           <RecentDocuments recentDocs={recentDocs} navigate={navigate} />
         </div>
       </div>
+
+      {/* ✅ Title Modal */}
+      {isTitleModalOpen && (
+        <TitleModal
+          docTitle={docTitle}
+          setDocTitle={setDocTitle}
+          onSave={handleSaveTitle}
+          onCancel={() => setIsTitleModalOpen(false)}
+        />
+      )}
     </div>
   );
 }

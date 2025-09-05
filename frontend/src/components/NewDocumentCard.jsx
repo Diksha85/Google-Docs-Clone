@@ -1,11 +1,11 @@
 import React from "react";
 import "../styles/DocsHome.css";
 
-export default function NewDocumentCard({ handleNewDocument }) {
+export default function NewDocumentCard({ openTitleModal }) {
   return (
     <div
       className="docs-new-doc"
-      onClick={handleNewDocument}
+      onClick={openTitleModal}
       style={{ cursor: "pointer" }}
     >
       <div className="docs-card">

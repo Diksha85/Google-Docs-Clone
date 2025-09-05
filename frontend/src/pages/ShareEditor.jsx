@@ -34,7 +34,6 @@ export default function ShareEditor() {
       .catch((err) => console.error("Failed to load shared document:", err));
   }, [token, navigate]);
 
-  // ✅ Real-time updates
   useEffect(() => {
     if (!docId) return;
     socket.emit("join-document", docId);
@@ -51,7 +50,6 @@ export default function ShareEditor() {
     [docId, role]
   );
 
-  // ✅ Auto-save for shared document
   useEffect(() => {
     if (!content || role === "view" || !docId) return;
 

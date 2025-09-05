@@ -32,7 +32,7 @@ export default function Login() {
         Cookies.set("userEmail", data.user?.email || "", { expires: 7 });
         Cookies.set("authToken", data.token || "", { expires: 7 });
 
-        // Check if user was trying to open a shared link or specific page
+        // Redirect after login
         const redirectPath = localStorage.getItem("redirectAfterLogin");
         if (redirectPath) {
           localStorage.removeItem("redirectAfterLogin");
@@ -72,8 +72,11 @@ export default function Login() {
           to continue to Google Docs
         </p>
 
+        {/* Error Message */}
         {errorMsg && (
-          <p className="text-red-500 text-center mb-4">{errorMsg}</p>
+          <div className="bg-red-100 text-red-700 border border-red-400 rounded px-4 py-2 text-center mb-4">
+            {errorMsg}
+          </div>
         )}
 
         <form onSubmit={handleSubmit} className="space-y-4">

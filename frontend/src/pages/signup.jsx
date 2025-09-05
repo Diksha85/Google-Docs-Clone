@@ -8,12 +8,14 @@ export default function Signup() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
+  const [successMsg, setSuccessMsg] = useState(""); // ✅ Added success message state
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setErrorMsg("");
+    setSuccessMsg("");
 
     try {
       const res = await fetch("http://localhost:5000/api/auth/signup", {
@@ -25,8 +27,15 @@ export default function Signup() {
       const data = await res.json();
 
       if (res.ok) {
-        alert("Signup successful! Please login.");
-        navigate("/"); 
+        setSuccessMsg("Signup successful! Please login."); // ✅ Show success message
+        setFullName("");
+        setEmail("");
+        setPassword("");
+
+        // Optional: Navigate after 2 seconds
+        setTimeout(() => {
+          navigate("/");
+        }, 2000);
       } else {
         setErrorMsg(data.message || "Something went wrong");
       }
@@ -41,22 +50,27 @@ export default function Signup() {
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="auth-card bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-        <div className="flex justify-center mb-4">
-         <div className="flex justify-center mb-6">
-  <div className="docs-logo bg-blue-500 rounded-full p-3 shadow-md hover:shadow-lg transition-shadow">
-    <img
-      src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJQAAACUCAMAAABC4vDmAAAAZlBMVEUwhvb9//8MZ9b///8mgvYcf/Z8sPmLtvn6/P/x9/4ieOewzvt5rfgohPaPvPoUbNucwvoAY9W5z/O+1PZmofhcnvh/s/mpxPAdb9kAWdawyfEnc9sAXtfI2fYwd9zM3vnc6PmnyftqlxHlAAABQklEQVR4nO3ZYVKDMBRF4ZpSRGvECKlaRdr9b9L3yxkrOCNJ7B17vhWcIUBfH6tVaa2bFdqn9ZTiTT9FuRAmq84bZVWPelEuPE9UnTvKhZe9XpSdYKcX5cLr6QkKRNm12utFueA6vajTZ1Ajyu6rTi/q6zOoEuXC26AX5cL7oBdlJzjoRVnVqBf1eYJSUfZmGPWibBYd9aLs3T7qRdl9NepFWdWhfNTtr7XlowAAAAAA+BeqTXZVapPvr7PrfWrU9tuHr2TbDFFXmRFFFFFEXURUk1mGqFhnF1OjJKcEAACgwFfZJU8uPu5yj1O75HlKdRwmiiiiiCJqQZTgdljxt49dAgAAmJGyS0geUebE+m6pOhYaUvyxuVmqedgUikqY0ddEEUUUURcctdyxUFTV3y/Xl/qDnrJLYGkAAAAAAAD+wgdWiT/hPWfjFwAAAABJRU5ErkJggg=="
-      alt="Docs Logo"
-      className="w-20 h-20"
-    />
-  </div>
-</div>
+        <div className="flex justify-center mb-6">
+          <div className="docs-logo bg-blue-500 rounded-full p-3 shadow-md hover:shadow-lg transition-shadow">
+            <img
+              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJQAAACUCAMAAABC4vDmAAAAZlBMVEUwhvb9//8MZ9b///8mgvYcf/Z8sPmLtvn6/P/x9/4ieOewzvt5rfgohPaPvPoUbNucwvoAY9W5z/O+1PZmofhcnvh/s/mpxPAdb9kAWdawyfEnc9sAXtfI2fYwd9zM3vnc6PmnyftqlxHlAAABQklEQVR4nO3ZYVKDMBRF4ZpSRGvECKlaRdr9b9L3yxkrOCNJ7B17vhWcIUBfH6tVaa2bFdqn9ZTiTT9FuRAmq84bZVWPelEuPE9UnTvKhZe9XpSdYKcX5cLr6QkKRNm12utFueA6vajTZ1Ajyu6rTi/q6zOoEuXC26AX5cL7oBdlJzjoRVnVqBf1eYJSUfZmGPWibBYd9aLs3T7qRdl9NepFWdWhfNTtr7XlowAAAAAA+BeqTXZVapPvr7PrfWrU9tuHr2TbDFFXmRFFFFFEXURUk1mGqFhnF1OjJKcEAACgwFfZJU8uPu5yj1O75HlKdRwmiiiiiCJqQZTgdljxt49dAgAAmJGyS0geUebE+m6pOhYaUvyxuVmqedgUikqY0ddEEUUUURcctdyxUFTV3y/Xl/qDnrJLYGkAAAAAAAD+wgdWiT/hPWfjFwAAAABJRU5ErkJggg=="
+              alt="Docs Logo"
+              className="w-20 h-20"
+            />
+          </div>
         </div>
+
         <h2 className="auth-title text-2xl font-semibold text-center mb-1">Sign Up</h2>
         <p className="auth-subtitle text-center text-gray-500 mb-6">
           to continue to Google Docs
         </p>
+{successMsg && (
+  <div className="flex items-center bg-green-100 text-green-700 border border-green-400 rounded px-4 py-2 mb-4">
+     <span className="ml-2">{successMsg}</span>
+  </div>
+)}
 
+        {/* Error Message */}
         {errorMsg && (
           <p className="text-red-500 text-center mb-4">{errorMsg}</p>
         )}

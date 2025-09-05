@@ -1,0 +1,148 @@
+#comment-panel {
+  padding: 16px;
+  border-left: 1px solid #ccc;
+  background-color: #fafafa;
+  height: 100%;
+  overflow-y: auto;
+}
+
+#comments-list {
+  margin-top: 10px;
+}
+
+.comment {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 10px;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.comment p {
+  margin: 4px 0;
+  font-size: 14px;
+}
+
+.comment-actions {
+  margin-top: 6px;
+}
+
+.comment-actions button {
+  margin-right: 6px;
+  padding: 4px 8px;
+  font-size: 12px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  background: #007bff;
+  color: white;
+  transition: background 0.2s;
+}
+
+.comment-actions button:hover {
+  background: #0056b3;
+}
+
+.replies {
+  margin-top: 8px;
+  margin-left: 16px;
+  padding-left: 10px;
+  border-left: 2px solid #ddd;
+}
+
+.reply {
+  background: #f1f1f1;
+  border-radius: 6px;
+  padding: 6px 8px;
+  margin-bottom: 6px;
+}
+
+.reply p {
+  font-size: 13px;
+  margin: 2px 0;
+}
+
+.new-comment {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.new-comment textarea {
+  resize: none;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  margin-bottom: 6px;
+  font-size: 14px;
+}
+
+.new-comment button {
+  align-self: flex-start;
+  padding: 6px 12px;
+  font-size: 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  background: #28a745;
+  color: white;
+  transition: background 0.2s;
+}
+
+.new-comment button:hover {
+  background: #218838;
+}
+
+.reply-box {
+  margin-top: 8px;
+  margin-left: 16px;
+  padding: 8px;
+  background: #f9f9f9;
+  border-left: 2px solid #007bff;
+  border-radius: 6px;
+}
+
+.reply-box textarea {
+  width: 100%;
+  min-height: 50px;
+  resize: none;
+  padding: 6px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+.reply-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.reply-actions button {
+  padding: 5px 12px;
+  font-size: 13px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.reply-actions .cancel-btn {
+  background: #ccc;
+  color: #333;
+}
+
+.reply-actions .cancel-btn:hover {
+  background: #999;
+}
+
+.reply-actions .submit-btn {
+  background: #007bff;
+  color: white;
+}
+
+.reply-actions .submit-btn:hover {
+  background: #0056b3;
+}
+

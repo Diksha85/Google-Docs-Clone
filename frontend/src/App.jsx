@@ -6,7 +6,6 @@ import DocsHome from "./pages/DocsHome.jsx";
 import Editor from "./pages/Editor.jsx";
 import ShareEditor from "./pages/ShareEditor";
 
-// Add route for shared links
 
 
 export default function App() {

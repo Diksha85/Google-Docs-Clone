@@ -2,9 +2,6 @@ import Document from "../models/Document.js";
 import crypto from "crypto";
 import { sendEmail } from "../utils/mailer.js";
 
-/**
- * ✅ Create new document
- */
 export const createDocument = async (req, res) => {
   try {
     const { title } = req.body;
@@ -25,9 +22,7 @@ export const createDocument = async (req, res) => {
   }
 };
 
-/**
- * ✅ Update document (Owner OR Shared Link)
- */
+
 export const updateDocument = async (req, res) => {
   try {
     const { id } = req.params;
@@ -36,18 +31,17 @@ export const updateDocument = async (req, res) => {
     let doc;
 
     if (token) {
-      // ✅ Shared link mode
+
       doc = await Document.findOne({ "shareLink.token": token });
       if (!doc) return res.status(404).json({ message: "Document not found" });
 
-      // ✅ Check if editing is allowed
       if (doc.shareLink.role !== "edit") {
         return res
           .status(403)
           .json({ message: "This link is view-only. Editing not allowed." });
       }
     } else {
-      // ✅ Owner mode
+   
       doc = await Document.findById(id);
       if (!doc) return res.status(404).json({ message: "Document not found" });
 
@@ -68,9 +62,6 @@ export const updateDocument = async (req, res) => {
   }
 };
 
-/**
- * ✅ Get a document by ID (Owner only)
- */
 export const getDocument = async (req, res) => {
   try {
     const { id } = req.params;
@@ -88,9 +79,7 @@ export const getDocument = async (req, res) => {
   }
 };
 
-/**
- * ✅ Get all documents for logged-in user
- */
+
 export const getUserDocuments = async (req, res) => {
   try {
     const userEmail = req.user.email;
@@ -103,9 +92,6 @@ export const getUserDocuments = async (req, res) => {
   }
 };
 
-/**
- * ✅ Generate share link and optionally email it
- */
 export const shareDocument = async (req, res) => {
   try {
     const { id } = req.params;
@@ -117,14 +103,14 @@ export const shareDocument = async (req, res) => {
       return res.status(403).json({ message: "Not authorized" });
     }
 
-    // ✅ Generate new share token
+
     const token = crypto.randomBytes(16).toString("hex");
     doc.shareLink = { token, role };
     await doc.save();
 
-    const shareUrl = `http://localhost:5173/share/${token}`; // ✅ match your frontend port
+    const shareUrl = `http://localhost:5173/share/${token}`; 
 
-    // ✅ Send email if recipientEmail provided
+
     if (recipientEmail) {
       const subject = `${req.user.name || "Someone"} shared a document with you`;
       const html = `
@@ -143,9 +129,7 @@ export const shareDocument = async (req, res) => {
   }
 };
 
-/**
- * ✅ Access shared document by token
- */
+
 export const accessSharedDocument = async (req, res) => {
   try {
     const { token } = req.params;
@@ -163,9 +147,7 @@ export const accessSharedDocument = async (req, res) => {
   }
 };
 
-/**
- * ✅ Log access (Optional: if you want to track who accessed)
- */
+
 export const logSharedAccess = async (req, res) => {
   try {
     const { token } = req.body;

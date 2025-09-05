@@ -9,13 +9,13 @@ import authRoutes from "./routes/authRoutes.js";
 import documentRoutes from "./routes/documentRoutes.js";
 import { verifyToken } from "../backend/middleware/authMiddleware.js";
 import { connectDB } from "../backend/config/db.js"; 
+import commentRoutes from "./routes/commentRoutes.js";
 
 dotenv.config();
 
 const app = express();
 const httpServer = createServer(app);
 
-// Allow your frontend origin (change if you switch ports)
 const allowedOrigin = "http://localhost:5173";
 
 const io = new Server(httpServer, {
@@ -38,6 +38,7 @@ app.use(cookieParser());
 
 app.use("/api/auth", authRoutes);
 app.use("/api/documents", documentRoutes);
+app.use("/api/comments", commentRoutes);
 
 app.get("/api/protected", verifyToken, (req, res) => {
   res.json({ message: `Hello ${req.user.name}, you are authenticated!` });

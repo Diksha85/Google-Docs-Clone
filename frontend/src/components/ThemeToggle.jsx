@@ -1,11 +1,9 @@
-// src/components/ThemeToggle.jsx
 import React, { useEffect, useState } from "react";
 import { FaSun, FaMoon } from "react-icons/fa";
 
 export default function ThemeToggle() {
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
 
-  // Apply theme to body and save to localStorage
   useEffect(() => {
     document.body.classList.remove("light", "dark");
     document.body.classList.add(theme);
